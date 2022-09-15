@@ -49,7 +49,7 @@ export default function TodoItemsContainer({
       case 'all': {
         if (Context?.AllTodo) {
           setAllTodoArray(
-            Array.from(Context?.AllTodo, ([key, value]) => value),
+            Array.from(Context?.AllTodo, ([key, value]) => value).reverse(),
           );
           setIsDynamic(true);
         }
@@ -60,7 +60,7 @@ export default function TodoItemsContainer({
           setAllTodoArray(
             Array.from(Context?.AllTodo, ([key, value]) => value).filter(
               (each) => each.type === 'work',
-            ),
+            ).reverse(),
           );
           setIsDynamic(true);
         }
@@ -71,7 +71,7 @@ export default function TodoItemsContainer({
           setAllTodoArray(
             Array.from(Context?.AllTodo, ([key, value]) => value).filter(
               (each) => each.type === 'personal',
-            ),
+            ).reverse(),
           );
           setIsDynamic(true);
         }
@@ -80,7 +80,7 @@ export default function TodoItemsContainer({
       case 'done': {
         if (Context?.AllDoneTodo) {
           setAllTodoArray(
-            Array.from(Context?.AllDoneTodo, ([key, value]) => value),
+            Array.from(Context?.AllDoneTodo, ([key, value]) => value).reverse()
           );
           setIsDynamic(false);
         }
