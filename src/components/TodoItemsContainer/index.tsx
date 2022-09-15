@@ -1,9 +1,18 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { MainContext } from '../../contexts/MainContext';
 import TodoItem from '../TodoItem';
+import Todo from '../../interfaces/Todo';
+interface TodoItemsContainerProps {
+  variant: 'all' | 'work' | 'personal' | 'done';
+}
 
-export default function TodoItemsContainer() {
+export default function TodoItemsContainer({
+  variant,
+}: TodoItemsContainerProps) {
+  const [AllTodoArray, setAllTodoArray] = useState<Todo[]>([]);
+  const Context = useContext(MainContext);
   const Container = styled.div`
     width: 100%;
     padding: 16px;
@@ -31,19 +40,21 @@ export default function TodoItemsContainer() {
       background: ${grey[500]};
     }
   `;
+  useEffect(() => {
+    if (Context?.AllTodo) {
+      setAllTodoArray(Array.from(Context?.AllTodo, ([key, value]) => value));
+    }
+  }, []);
   return (
     <Container>
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
+      {AllTodoArray.map((each) => (
+        <TodoItem
+          key={each._id}
+          _id={each._id}
+          title={each.title}
+          type={each.type}
+        />
+      ))}
     </Container>
   );
 }

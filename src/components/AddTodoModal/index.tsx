@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
@@ -15,7 +15,10 @@ import {
   RadioGroup,
   TextField,
 } from '@mui/material';
-
+import { setToLocalStorage } from '../../utils/accessLocalStorage';
+import { v4 as uuidv4 } from 'uuid';
+import Todo from '../../interfaces/Todo';
+import { MainContext } from '../../contexts/MainContext';
 const style = {
   position: 'absolute',
   top: '50%',
@@ -33,16 +36,47 @@ const style = {
 interface AddTodoModalProps {
   open: boolean;
   handleClose: () => void;
+  _id?: string;
+  title?: string;
+  type?: string;
 }
 
-export default function AddTodoModal({ open, handleClose }: AddTodoModalProps) {
+export default function AddTodoModal({
+  open,
+  handleClose,
+  _id,
+  title,
+  type,
+}: AddTodoModalProps) {
+  const formRef = React.useRef<HTMLFormElement>(null);
+  const Context = useContext(MainContext);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    formRef?.current?.reportValidity();
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const data: FormData = new FormData(event.currentTarget);
+    title = String(data.get('title'));
+    type = String(data.get('type'));
+    if (_id) {
+      if (typeof title === 'string' && typeof type === 'string') {
+        const TodoData: Todo = {
+          _id,
+          title,
+          type,
+        };
+        Context?.EditTodo(_id, TodoData);
+      }
+    } else {
+      if (typeof title === 'string' && typeof type === 'string') {
+        const uid = uuidv4();
+        const TodoData: Todo = {
+          _id: uid,
+          title,
+          type,
+        };
+        Context?.AddNewTodo(TodoData);
+      }
+      handleClose();
+    }
   };
 
   return (
@@ -60,13 +94,14 @@ export default function AddTodoModal({ open, handleClose }: AddTodoModalProps) {
       <Fade in={open}>
         <Box sx={style}>
           <Typography id="transition-modal-title" variant="h6" component="h2">
-            Add new todo
+            {_id ? 'Edit your todo' : 'Add new todo'}
+            {/* Add new todo */}
           </Typography>
 
           <Box
             component="form"
+            ref={formRef}
             onSubmit={handleSubmit}
-            noValidate
             sx={{ mt: 1, display: 'flex', flexDirection: 'column', gap: 3 }}
           >
             <TextField
@@ -76,6 +111,8 @@ export default function AddTodoModal({ open, handleClose }: AddTodoModalProps) {
               id="title"
               label="Title"
               name="title"
+              // value={title}
+              defaultValue={title}
               autoFocus
             />
             <FormControl required>
@@ -83,9 +120,10 @@ export default function AddTodoModal({ open, handleClose }: AddTodoModalProps) {
                 Select the type
               </FormLabel>
               <RadioGroup
+                defaultValue={`${type ? type : 'work'}`}
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
+                name="type"
               >
                 <FormControlLabel
                   value="work"

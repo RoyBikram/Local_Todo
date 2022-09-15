@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Box, Checkbox, Divider, IconButton, Typography } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import styled from '@emotion/styled';
 import { blue, green, grey, red } from '@mui/material/colors';
-export default function TodoItem() {
+import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
+import Todo from '../../interfaces/Todo';
+import EditTodoButton from '../EditTodoButton';
+import { MainContext } from '../../contexts/MainContext';
+
+export default function TodoItem({ _id, title, type }: Todo) {
+  const Context = useContext(MainContext);
   const Container = styled.div`
     display: flex;
     align-items: center;
@@ -23,7 +29,12 @@ export default function TodoItem() {
   `;
   return (
     <Container>
-      <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }} />
+      <Checkbox
+        onChange={() => {
+          Context?.DoneTodo(_id, { _id, title, type });
+        }}
+        sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
+      />
       <Divider
         sx={{ ml: '4px' }}
         orientation="vertical"
@@ -31,15 +42,21 @@ export default function TodoItem() {
         flexItem
       />
       <TextContainer>
-        <HomeRoundedIcon sx={{ color: grey[400], alignSelf: 'flex-start' }} />
-        <Typography sx={{ color: grey[800], mt: '2px' }}>
-          Your To Do Here
-        </Typography>
+        {type === 'work' ? (
+          <WorkRoundedIcon sx={{ color: grey[400], alignSelf: 'flex-start' }} />
+        ) : (
+          <HomeRoundedIcon sx={{ color: grey[400], alignSelf: 'flex-start' }} />
+        )}
+        <Typography sx={{ color: grey[800], mt: '2px' }}>{title}</Typography>
       </TextContainer>
-      <IconButton sx={{ color: blue[600] }} aria-label="edit">
-        <EditRoundedIcon />
-      </IconButton>
-      <IconButton sx={{ color: red[400] }} aria-label="delete">
+      <EditTodoButton _id={_id} title={title} type={type} />
+      <IconButton
+        sx={{ color: red[400] }}
+        aria-label="delete"
+        onClick={() => {
+          Context?.DeleteTodo(_id);
+        }}
+      >
         <DeleteRoundedIcon />
       </IconButton>
     </Container>

@@ -1,10 +1,8 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import styled from '@emotion/styled';
-import TodoItem from '../../../../components/TodoItem';
 import TodoItemsContainer from '../../../../components/TodoItemsContainer';
 
 interface TabPanelProps {
@@ -66,6 +64,7 @@ export default function TodoCard() {
           <StyledTab label="All" {...a11yProps(0)} />
           <StyledTab label="Work" {...a11yProps(1)} />
           <StyledTab label="Personal" {...a11yProps(2)} />
+          <StyledTab label="Done" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <Box
@@ -76,13 +75,17 @@ export default function TodoCard() {
         }}
       >
         <TabPanel value={value} index={0}>
-          <TodoItemsContainer />
+          <TodoItemsContainer variant="all" />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <TodoItemsContainer />
+          <TodoItemsContainer variant="work" />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <TodoItemsContainer />
+          <TodoItemsContainer variant="personal" />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <TodoItemsContainer variant="done" />
+          done
         </TabPanel>
       </Box>
     </Box>
