@@ -1,7 +1,9 @@
+// ---------External----------//
 import React from 'react';
 import { Fab, IconButton } from '@mui/material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import AddTodoModal from '../AddTodoModal';
+// ---------Internal----------//
+import AddTodoModal from './AddTodoModal';
 
 export default function AddTodoButton() {
   const [open, setOpen] = React.useState(false);

@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
-import { Fab, IconButton } from '@mui/material';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import AddTodoModal from '../AddTodoModal';
+// ---------External----------//
+import React from 'react';
+import { IconButton } from '@mui/material';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { blue } from '@mui/material/colors';
-import GetTodoFromId from '../../utils/getTodoFromId';
-import { MainContext } from '../../contexts/MainContext';
-import Todo from '../../interfaces/Todo';
+// ---------Internal----------//
+import AddTodoModal from './AddTodoModal';
 
 interface EditTodoButtonProps {
   _id: string;

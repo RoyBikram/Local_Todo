@@ -1,17 +1,14 @@
+// ---------External----------//
 import React, { useContext } from 'react';
 import { Checkbox, Divider, IconButton, Typography } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import styled from '@emotion/styled';
-import {
-  blue,
-  grey,
-  purple,
-  red,
-} from '@mui/material/colors';
+import { blue, grey, purple, red } from '@mui/material/colors';
 import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
-import EditTodoButton from '../EditTodoButton';
-import { MainContext } from '../../contexts/MainContext';
+// ---------Internal----------//
+import EditTodoButton from './EditTodoButton';
+import { MainContext } from '../Contexts/MainContext';
 
 interface TodoItemProps {
   _id: string;
@@ -48,7 +45,7 @@ export default function TodoItem({
         <>
           <Checkbox
             onChange={() => {
-              Context?.DoneTodo(_id, { _id, title, type });
+              Context?.doneTodo(_id, { _id, title, type });
             }}
             sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
           />
@@ -79,7 +76,7 @@ export default function TodoItem({
             sx={{ color: red[400] }}
             aria-label="delete"
             onClick={() => {
-              Context?.DeleteTodo(_id);
+              Context?.deleteTodo(_id);
             }}
           >
             <DeleteRoundedIcon />

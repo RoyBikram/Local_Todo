@@ -1,4 +1,6 @@
+// ---------External----------//
 import { createContext } from 'react';
-import { Context } from '../interfaces/Context';
+// ---------Internal----------//
+import { Context } from '../Interfaces/Context';
 
 export const MainContext = createContext<Context | null>(null);

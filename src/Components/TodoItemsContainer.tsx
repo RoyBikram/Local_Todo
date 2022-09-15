@@ -1,9 +1,12 @@
+// ---------External----------//
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React, { useContext, useEffect, useState } from 'react';
-import { MainContext } from '../../contexts/MainContext';
-import TodoItem from '../TodoItem';
-import Todo from '../../interfaces/Todo';
+// ---------Internal----------//
+import { MainContext } from '../Contexts/MainContext';
+import TodoItem from './TodoItem';
+import Todo from '../Interfaces/Todo';
+
 interface TodoItemsContainerProps {
   variant: 'all' | 'work' | 'personal' | 'done';
 }

@@ -1,3 +1,4 @@
+// ---------External----------//
 import React, { useContext } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -9,16 +10,16 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
-  Grid,
   Modal,
   Radio,
   RadioGroup,
   TextField,
 } from '@mui/material';
-import { setToLocalStorage } from '../../utils/accessLocalStorage';
 import { v4 as uuidv4 } from 'uuid';
-import Todo from '../../interfaces/Todo';
-import { MainContext } from '../../contexts/MainContext';
+// ---------Internal----------//
+import Todo from '../Interfaces/Todo';
+import { MainContext } from '../Contexts/MainContext';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -63,7 +64,7 @@ export default function AddTodoModal({
           title,
           type,
         };
-        Context?.EditTodo(_id, TodoData);
+        Context?.editTodo(_id, TodoData);
       }
     } else {
       if (typeof title === 'string' && typeof type === 'string') {
@@ -73,7 +74,7 @@ export default function AddTodoModal({
           title,
           type,
         };
-        Context?.AddNewTodo(TodoData);
+        Context?.addNewTodo(TodoData);
       }
       handleClose();
     }

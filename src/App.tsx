@@ -1,5 +1,5 @@
 import React from 'react';
-import Home from './pages/Home';
+import Home from './Pages/Home';
 import styled from '@emotion/styled';
 import './global.css';
 

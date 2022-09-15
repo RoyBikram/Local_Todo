@@ -1,7 +1,9 @@
+// ---------External----------//
 import React from 'react';
 import styled from '@emotion/styled';
 import { Box } from '@mui/material';
-import Logo from '../../assets/img/logo.png';
+// ---------Internal----------//
+import Logo from '../Assets/Img/Logo.png';
 
 const Container = styled.div`
   box-sizing: border-box;

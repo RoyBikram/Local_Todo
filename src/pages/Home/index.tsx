@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+// ---------External----------//
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import Title from '../../components/Title';
-import TodoCard from './components/TodoCard';
-import AddTodoButton from '../../components/AddTodoButton';
-import Todo from '../../interfaces/Todo';
-import { MainContext } from '../../contexts/MainContext';
-import { Context } from '../../interfaces/Context';
+// ---------Internal----------//
+import Title from '../../Components/Title';
+import TodoCard from './Components/TodoCard';
+import AddTodoButton from '../../Components/AddTodoButton';
+import Todo from '../../Interfaces/Todo';
+import { MainContext } from '../../Contexts/MainContext';
+import { Context } from '../../Interfaces/Context';
 
 export default function Home() {
   const [AllTodo, setAllTodo] = useState<Map<string, Todo>>(new Map([]));
@@ -13,7 +15,7 @@ export default function Home() {
     new Map([]),
   );
 
-  const AddNewTodo = (Todo: Todo): void => {
+  const addNewTodo = (Todo: Todo): void => {
     setAllTodo((LatestAllTodo: Map<string, Todo>): Map<string, Todo> => {
       LatestAllTodo.set(Todo._id, Todo);
       const deepCopy = new Map<string, Todo>(
@@ -23,7 +25,7 @@ export default function Home() {
     });
   };
 
-  const EditTodo = (_id: string, Todo: Todo): void => {
+  const editTodo = (_id: string, Todo: Todo): void => {
     setAllTodo((LatestAllTodo: Map<string, Todo>): Map<string, Todo> => {
       LatestAllTodo.set(_id, Todo);
       const deepCopy = new Map<string, Todo>(
@@ -32,7 +34,7 @@ export default function Home() {
       return deepCopy;
     });
   };
-  const DeleteTodo = (_id: string): void => {
+  const deleteTodo = (_id: string): void => {
     setAllTodo((LatestAllTodo: Map<string, Todo>): Map<string, Todo> => {
       LatestAllTodo.delete(_id);
       const deepCopy = new Map<string, Todo>(
@@ -41,7 +43,7 @@ export default function Home() {
       return deepCopy;
     });
   };
-  const DoneTodo = (_id: string, Todo: Todo): void => {
+  const doneTodo = (_id: string, Todo: Todo): void => {
     setAllTodo((LatestAllTodo: Map<string, Todo>): Map<string, Todo> => {
       LatestAllTodo.delete(_id);
       const deepCopy = new Map<string, Todo>(
@@ -78,16 +80,16 @@ export default function Home() {
   const ContextValue: Context = {
     AllTodo,
     AllDoneTodo,
-    AddNewTodo,
-    EditTodo,
-    DeleteTodo,
-    DoneTodo,
+    addNewTodo,
+    editTodo,
+    deleteTodo,
+    doneTodo,
   };
 
   return (
     <MainContext.Provider value={ContextValue}>
       <Container>
-        <Title/>
+        <Title />
         <TodoCard />
         <AddTodoButton />
       </Container>
