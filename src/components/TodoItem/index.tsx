@@ -1,21 +1,36 @@
 import React, { useContext } from 'react';
-import { Box, Checkbox, Divider, IconButton, Typography } from '@mui/material';
+import { Checkbox, Divider, IconButton, Typography } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
-import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import styled from '@emotion/styled';
-import { blue, green, grey, red } from '@mui/material/colors';
+import {
+  blue,
+  grey,
+  purple,
+  red,
+} from '@mui/material/colors';
 import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
-import Todo from '../../interfaces/Todo';
 import EditTodoButton from '../EditTodoButton';
 import { MainContext } from '../../contexts/MainContext';
 
-export default function TodoItem({ _id, title, type }: Todo) {
+interface TodoItemProps {
+  _id: string;
+  title: string;
+  type: string;
+  IsDynamic: boolean;
+}
+
+export default function TodoItem({
+  _id,
+  title,
+  type,
+  IsDynamic,
+}: TodoItemProps) {
   const Context = useContext(MainContext);
   const Container = styled.div`
     display: flex;
     align-items: center;
-    background-color: ${blue[50]};
+    background-color: ${type === 'work' ? blue[50] : purple[50]};
     border-radius: 10px;
     padding: 4px;
     height: min-content;
@@ -29,36 +44,50 @@ export default function TodoItem({ _id, title, type }: Todo) {
   `;
   return (
     <Container>
-      <Checkbox
-        onChange={() => {
-          Context?.DoneTodo(_id, { _id, title, type });
-        }}
-        sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
-      />
-      <Divider
-        sx={{ ml: '4px' }}
-        orientation="vertical"
-        variant="middle"
-        flexItem
-      />
+      {IsDynamic ? (
+        <>
+          <Checkbox
+            onChange={() => {
+              Context?.DoneTodo(_id, { _id, title, type });
+            }}
+            sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }}
+          />
+          <Divider
+            sx={{ ml: '4px' }}
+            orientation="vertical"
+            variant="middle"
+            flexItem
+          />
+        </>
+      ) : (
+        <></>
+      )}
       <TextContainer>
         {type === 'work' ? (
-          <WorkRoundedIcon sx={{ color: grey[400], alignSelf: 'flex-start' }} />
+          <WorkRoundedIcon
+            sx={{ color: grey[500], fontSize: '20px', alignSelf: 'flex-start' }}
+          />
         ) : (
-          <HomeRoundedIcon sx={{ color: grey[400], alignSelf: 'flex-start' }} />
+          <HomeRoundedIcon sx={{ color: grey[500], alignSelf: 'flex-start' }} />
         )}
-        <Typography sx={{ color: grey[800], mt: '2px' }}>{title}</Typography>
+        <Typography sx={{ color: grey[800] }}>{title}</Typography>
       </TextContainer>
-      <EditTodoButton _id={_id} title={title} type={type} />
-      <IconButton
-        sx={{ color: red[400] }}
-        aria-label="delete"
-        onClick={() => {
-          Context?.DeleteTodo(_id);
-        }}
-      >
-        <DeleteRoundedIcon />
-      </IconButton>
+      {IsDynamic ? (
+        <>
+          <EditTodoButton _id={_id} title={title} type={type} />
+          <IconButton
+            sx={{ color: red[400] }}
+            aria-label="delete"
+            onClick={() => {
+              Context?.DeleteTodo(_id);
+            }}
+          >
+            <DeleteRoundedIcon />
+          </IconButton>
+        </>
+      ) : (
+        <></>
+      )}
     </Container>
   );
 }

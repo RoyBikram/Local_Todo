@@ -27,7 +27,7 @@ export default function EditTodoButton({
     <>
       <IconButton
         onClick={handleOpen}
-        sx={{ color: blue[600] }}
+        sx={{ color: blue[500] }}
         aria-label="edit"
       >
         <EditRoundedIcon sx={{ fontSize: 24 }} />

@@ -12,6 +12,7 @@ export default function TodoItemsContainer({
   variant,
 }: TodoItemsContainerProps) {
   const [AllTodoArray, setAllTodoArray] = useState<Todo[]>([]);
+  const [IsDynamic, setIsDynamic] = useState<boolean>(false);
   const Context = useContext(MainContext);
   const Container = styled.div`
     width: 100%;
@@ -41,8 +42,50 @@ export default function TodoItemsContainer({
     }
   `;
   useEffect(() => {
-    if (Context?.AllTodo) {
-      setAllTodoArray(Array.from(Context?.AllTodo, ([key, value]) => value));
+    switch (variant) {
+      case 'all': {
+        if (Context?.AllTodo) {
+          setAllTodoArray(
+            Array.from(Context?.AllTodo, ([key, value]) => value),
+          );
+          setIsDynamic(true);
+        }
+        break;
+      }
+      case 'work': {
+        if (Context?.AllTodo) {
+          setAllTodoArray(
+            Array.from(Context?.AllTodo, ([key, value]) => value).filter(
+              (each) => each.type === 'work',
+            ),
+          );
+          setIsDynamic(true);
+        }
+        break;
+      }
+      case 'personal': {
+        if (Context?.AllTodo) {
+          setAllTodoArray(
+            Array.from(Context?.AllTodo, ([key, value]) => value).filter(
+              (each) => each.type === 'personal',
+            ),
+          );
+          setIsDynamic(true);
+        }
+        break;
+      }
+      case 'done': {
+        if (Context?.AllDoneTodo) {
+          setAllTodoArray(
+            Array.from(Context?.AllDoneTodo, ([key, value]) => value),
+          );
+          setIsDynamic(false);
+        }
+        break;
+      }
+
+      default:
+        break;
     }
   }, []);
   return (
@@ -53,6 +96,7 @@ export default function TodoItemsContainer({
           _id={each._id}
           title={each.title}
           type={each.type}
+          IsDynamic={IsDynamic}
         />
       ))}
     </Container>

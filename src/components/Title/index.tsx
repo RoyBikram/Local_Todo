@@ -1,26 +1,22 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Typography } from '@mui/material';
-import { blue, grey, pink } from '@mui/material/colors';
+import { Box } from '@mui/material';
+import Logo from '../../assets/img/logo.png';
 
-interface TitleProps {
-  children?: string;
-}
+const Container = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 8px;
+  display: grid;
+  place-items: center;
 
-export default function Title({ children }: TitleProps) {
+`
+
+export default function Title() {
   return (
-    <Typography
-      sx={{
-        p: 1.5,
-        m: 1,
-        borderRadius: 2,
-        color: grey[800],
-        fontWeight: 500,
-        textAlign: 'center',
-      }}
-      variant="h6"
-    >
-      {children}
-    </Typography>
+    <Container>
+      <Box sx={{ height: 34, width: 'auto' }} component="img" src={Logo}></Box>
+    </Container>
   );
 }

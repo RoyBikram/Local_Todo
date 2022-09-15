@@ -87,7 +87,7 @@ export default function Home() {
   return (
     <MainContext.Provider value={ContextValue}>
       <Container>
-        <Title>Todo</Title>
+        <Title/>
         <TodoCard />
         <AddTodoButton />
       </Container>
