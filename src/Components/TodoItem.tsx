@@ -8,7 +8,7 @@ import { blue, grey, purple, red } from '@mui/material/colors';
 import WorkRoundedIcon from '@mui/icons-material/WorkRounded';
 // ---------Internal----------//
 import EditTodoButton from './EditTodoButton';
-import { MainContext } from '../Contexts/MainContext';
+import MainContext from '../Contexts/MainContext';
 
 interface TodoItemProps {
   _id: string;

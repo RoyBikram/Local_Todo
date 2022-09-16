@@ -18,21 +18,7 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 // ---------Internal----------//
 import Todo from '../Interfaces/Todo';
-import { MainContext } from '../Contexts/MainContext';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  maxWidth: 400,
-  width: '90%',
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 3,
-  borderRadius: '10px',
-  boxSizing: 'border-box',
-};
+import MainContext from '../Contexts/MainContext';
 
 interface AddTodoModalProps {
   open: boolean;
@@ -78,6 +64,20 @@ export default function AddTodoModal({
       }
       handleClose();
     }
+  };
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    maxWidth: 400,
+    width: '90%',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 3,
+    borderRadius: '10px',
+    boxSizing: 'border-box',
   };
 
   return (

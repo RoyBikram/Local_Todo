@@ -12,8 +12,7 @@ const Container = styled.div`
   padding-bottom: 8px;
   display: grid;
   place-items: center;
-
-`
+`;
 
 export default function Title() {
   return (

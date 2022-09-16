@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React, { useContext, useEffect, useState } from 'react';
 // ---------Internal----------//
-import { MainContext } from '../Contexts/MainContext';
+import MainContext from '../Contexts/MainContext';
 import TodoItem from './TodoItem';
 import Todo from '../Interfaces/Todo';
 
@@ -58,9 +58,9 @@ export default function TodoItemsContainer({
       case 'work': {
         if (Context?.AllTodo) {
           setAllTodoArray(
-            Array.from(Context?.AllTodo, ([key, value]) => value).filter(
-              (each) => each.type === 'work',
-            ).reverse(),
+            Array.from(Context?.AllTodo, ([key, value]) => value)
+              .filter((each) => each.type === 'work')
+              .reverse(),
           );
           setIsDynamic(true);
         }
@@ -69,9 +69,9 @@ export default function TodoItemsContainer({
       case 'personal': {
         if (Context?.AllTodo) {
           setAllTodoArray(
-            Array.from(Context?.AllTodo, ([key, value]) => value).filter(
-              (each) => each.type === 'personal',
-            ).reverse(),
+            Array.from(Context?.AllTodo, ([key, value]) => value)
+              .filter((each) => each.type === 'personal')
+              .reverse(),
           );
           setIsDynamic(true);
         }
@@ -80,7 +80,7 @@ export default function TodoItemsContainer({
       case 'done': {
         if (Context?.AllDoneTodo) {
           setAllTodoArray(
-            Array.from(Context?.AllDoneTodo, ([key, value]) => value).reverse()
+            Array.from(Context?.AllDoneTodo, ([key, value]) => value).reverse(),
           );
           setIsDynamic(false);
         }
@@ -90,7 +90,7 @@ export default function TodoItemsContainer({
       default:
         break;
     }
-  }, []);
+  }, [Context]);
   return (
     <Container>
       {AllTodoArray.map((each) => (

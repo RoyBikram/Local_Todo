@@ -1,67 +1,13 @@
 // ---------External----------//
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 // ---------Internal----------//
 import Title from '../../Components/Title';
 import TodoCard from './Components/TodoCard';
 import AddTodoButton from '../../Components/AddTodoButton';
-import Todo from '../../Interfaces/Todo';
-import { MainContext } from '../../Contexts/MainContext';
-import { Context } from '../../Interfaces/Context';
+import { ContextProvider } from '../../Contexts/MainContext';
 
 export default function Home() {
-  const [AllTodo, setAllTodo] = useState<Map<string, Todo>>(new Map([]));
-  const [AllDoneTodo, setAllDoneTodo] = useState<Map<string, Todo>>(
-    new Map([]),
-  );
-
-  const addNewTodo = (Todo: Todo): void => {
-    setAllTodo((LatestAllTodo: Map<string, Todo>): Map<string, Todo> => {
-      LatestAllTodo.set(Todo._id, Todo);
-      const deepCopy = new Map<string, Todo>(
-        JSON.parse(JSON.stringify(Array.from(LatestAllTodo))),
-      );
-      return deepCopy;
-    });
-  };
-
-  const editTodo = (_id: string, Todo: Todo): void => {
-    setAllTodo((LatestAllTodo: Map<string, Todo>): Map<string, Todo> => {
-      LatestAllTodo.set(_id, Todo);
-      const deepCopy = new Map<string, Todo>(
-        JSON.parse(JSON.stringify(Array.from(LatestAllTodo))),
-      );
-      return deepCopy;
-    });
-  };
-  const deleteTodo = (_id: string): void => {
-    setAllTodo((LatestAllTodo: Map<string, Todo>): Map<string, Todo> => {
-      LatestAllTodo.delete(_id);
-      const deepCopy = new Map<string, Todo>(
-        JSON.parse(JSON.stringify(Array.from(LatestAllTodo))),
-      );
-      return deepCopy;
-    });
-  };
-  const doneTodo = (_id: string, Todo: Todo): void => {
-    setAllTodo((LatestAllTodo: Map<string, Todo>): Map<string, Todo> => {
-      LatestAllTodo.delete(_id);
-      const deepCopy = new Map<string, Todo>(
-        JSON.parse(JSON.stringify(Array.from(LatestAllTodo))),
-      );
-      return deepCopy;
-    });
-    setAllDoneTodo(
-      (LatestAllDoneTodo: Map<string, Todo>): Map<string, Todo> => {
-        LatestAllDoneTodo.set(Todo._id, Todo);
-        const deepCopy = new Map<string, Todo>(
-          JSON.parse(JSON.stringify(Array.from(LatestAllDoneTodo))),
-        );
-        return deepCopy;
-      },
-    );
-  };
-
   const Container = styled.div`
     max-width: 500px;
     width: 100%;
@@ -77,22 +23,13 @@ export default function Home() {
     }
   `;
 
-  const ContextValue: Context = {
-    AllTodo,
-    AllDoneTodo,
-    addNewTodo,
-    editTodo,
-    deleteTodo,
-    doneTodo,
-  };
-
   return (
-    <MainContext.Provider value={ContextValue}>
+    <ContextProvider>
       <Container>
         <Title />
         <TodoCard />
         <AddTodoButton />
       </Container>
-    </MainContext.Provider>
+    </ContextProvider>
   );
 }
